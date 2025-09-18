@@ -1,0 +1,6 @@
+---
+title: "p8105_hw1_xl3054"
+author: "Xinhui Lin"
+date: "2025-09-18"
+output: html_document
+---
