@@ -1,6 +1,64 @@
 ---
 title: "p8105_hw1_xl3054"
 author: "Xinhui Lin"
-date: "2025-09-18"
+date: "2025-09-14"
 output: html_document
 ---
+
+# Problem 1
+```{r}
+library(moderndive)
+data("early_january_weather")
+early_january_weather
+```
+This dataset "`early_january_weather`" contains `r nrow(early_january_weather)` rows and `r ncol(early_january_weather)` columns. Each row corresponds to an hourly weather observation in EWR in Janurary 1-15, 2013, and the columns represent different variables describing the temperature, humidity, and wind conditions at that time. Variables include `r names(early_january_weather)`. The mean temperature is `r mean(early_january_weather$temp)` degrees Fahrenheit.
+
+```{r}
+## scatterplot
+library(ggplot2)
+ggplot(early_january_weather) + 
+  geom_point(aes(x = time_hour, y = temp, color = humid)) + 
+  labs(title = "Temperature Over Time", x = "Time", y = "Temperature", color = "Humidity")
+```
+
+This scatterplot shows temperature (`temp`) and humidity (`humid`) over time (`time_hour`) in early January. In general, temperature increases as time goes, while goes up and down within each day, ranging from `r min(early_january_weather$temp)`°F to `r max(early_january_weather$temp)`°F. Early in the month, when temperature is lower, humidity is also lower, while later in the month, warmer days tend to come along with higher humidity. Overall, the plot suggests both temperature and humidity increased over time.
+
+
+# Problem 2
+```{r}
+library(tibble)
+set.seed(123)
+problem2_df = 
+  tibble(
+    random_sample = rnorm(10, mean = 0, sd = 1),
+    greater_0 = random_sample>0,
+    chr_vec = paste0("char", 1:10), 
+    fac_vec = factor(rep(c("Level A", "Level B", "Level C"), length.out = 10))
+    )
+problem2_df
+```
+
+Taking the mean of each variable:
+```{r}
+library(tidyverse)
+
+mean(pull(problem2_df, random_sample))
+mean(pull(problem2_df, greater_0))
+mean(pull(problem2_df, chr_vec))
+mean(pull(problem2_df, fac_vec))
+```
+Only the first `random_sample` and second `greater_0` columns are able to get a mean, `r mean(pull(problem2_df, random_sample))` and `r mean(pull(problem2_df, greater_0))` respectively. However, the other two columns shows "NA" for the output, and there are warning messages saying "argument is not numeric or logical: returning NA".
+
+
+```{r echo = TRUE, eval = FALSE}
+as.numeric(problem2_df$greater_0)  # logical to numeric (FALSE = 0, TRUE = 1)
+as.numeric(problem2_df$chr_vec)    # character to numeric but with NA and warning
+as.numeric(problem2_df$fac_vec)    # factor to integers for levels (1, 2, 3)
+```
+After using `as.numeric` function, logical is able to change to numeric, with FALSE = 0 and TRUE = 1. This works with mean() because logicals are automatically considered as 0 and 1 for FALSE and TRUE.
+Characters cannot convert to numeric numbers because a single word/character like "char1" does not have a numeric meaning, which the mean cannot be calculated.
+Factors are also able to convert into numeric as integers for corresponding levels (1, 2, 3), but in factors, the levels are not in numeric values, so the mean would not be meaningful.
+
+It shows that the mean can be only calculated when a variable has a meaning numeric value, such as an integer, a double or a logical value, but not when a variable is in factors or characters.
+
+
