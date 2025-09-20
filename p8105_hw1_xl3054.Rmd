@@ -54,9 +54,9 @@ Only the first `random_sample` and second `greater_0` columns are able to get a 
 
 ```{r echo = TRUE, results='hide', message=FALSE, warning=FALSE}
 #convert logical, factor and character into numeric
-mean(as.numeric(pull(problem2_df, greater_0)))
-mean(as.numeric(pull(problem2_df, chr_vec)))
-mean(as.numeric(pull(problem2_df, fac_vec)))
+as.numeric(pull(problem2_df, greater_0))
+as.numeric(pull(problem2_df, chr_vec))
+as.numeric(pull(problem2_df, fac_vec))
 ```
 After using `as.numeric` function, logical is able to change to numeric, with FALSE = 0 and TRUE = 1. This works with mean() because logicals are automatically considered as 0 and 1 for FALSE and TRUE.
 Characters cannot convert to numeric numbers because a single word/character like "char1" does not have a numeric meaning, which the mean cannot be calculated.
