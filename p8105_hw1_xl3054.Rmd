@@ -63,5 +63,3 @@ Characters cannot convert to numeric numbers because a single word/character lik
 Factors are also able to convert into numeric as integers for corresponding levels (1, 2, 3), but in factors, the levels are not in numeric values, so the mean would not be meaningful.
 
 It shows that the mean can be only calculated when a variable has a meaning numeric value, such as an integer, a double or a logical value, but not when a variable is in factor or character.
-
-
